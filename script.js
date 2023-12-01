@@ -56,6 +56,31 @@ let drawPoint = () => {
         .attr('cy', (item) => {
             return yScale(new Date(item['Seconds'] * 1000))
         })
+        .attr('fill', (item) => {
+            if(item["URL"] != ""){
+                return 'orange'
+            } else {
+                return 'lightgreen'
+            }
+        })
+        .on('mouseover', (item) => {
+            tooltip.transition()
+                .style('visibility', 'visible')
+
+            if(item['Doping'] != ""){
+                tooltip.text(item['Year'] + ' - ' +
+                    item['Name'] + ' - ' + item['Time'] + ' - ' + item['Doping'])
+            }else{
+                tooltip.text(item['Year'] + ' - ' +
+                    item['Name'] + ' - ' + item['Time'] + ' - ' + 'No Allegations')
+            }
+
+            tooltip.attr('data-year', item['Year'])
+        })
+        .on('mouseout', (item) => {
+            tooltip.transition()
+                .style('visibility', 'hidden')
+        })
 }
 
 let generateAxes = () => {
